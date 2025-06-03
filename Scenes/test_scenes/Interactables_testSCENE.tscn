@@ -1,0 +1,146 @@
+[gd_scene load_steps=17 format=3 uid="uid://n30g1mb1h0fm"]
+
+[ext_resource type="Script" uid="uid://b54lkkupgnxdx" path="res://Scripts/charcterMovement.gd" id="1_o5p50"]
+[ext_resource type="Script" uid="uid://u5pvd0evm40a" path="res://Scripts/mouse_controller.gd" id="2_spwlg"]
+[ext_resource type="Material" uid="uid://hctxtk72lpok" path="res://Materials/prototypeMaterials/FloorMAT.tres" id="3_x3h3c"]
+[ext_resource type="Script" uid="uid://cobsdeg3tmgw1" path="res://Scripts/interactables/inspectable.gd" id="4_spwlg"]
+[ext_resource type="Script" uid="uid://cbaejdcc7fll7" path="res://Scripts/interactables/door.gd" id="5_x3h3c"]
+[ext_resource type="Material" uid="uid://cviwlbhkw2e6n" path="res://Materials/prototypeMaterials/wallMAT.tres" id="6_10iwk"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_o5p50"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_spwlg"]
+sky_material = SubResource("ProceduralSkyMaterial_o5p50")
+
+[sub_resource type="Environment" id="Environment_x3h3c"]
+background_mode = 2
+sky = SubResource("Sky_spwlg")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_10iwk"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ptlkw"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_owhd2"]
+vertices = PackedVector3Array(-9.5, 0.474, -9.5, -9.5, 0.474, 9.5, 9.5, 0.474, 9.5, 9.5, 0.474, -9.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_x3h3c"]
+size = Vector3(0.453125, 2.11725, 1.14063)
+
+[sub_resource type="BoxMesh" id="BoxMesh_x3h3c"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o5p50"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_spwlg"]
+
+[node name="InteractablesTestScene" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_x3h3c")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." groups=["Player"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.11974, 0)
+script = ExtResource("1_o5p50")
+speed = 2.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+shape = SubResource("CapsuleShape3D_10iwk")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
+mesh = SubResource("CapsuleMesh_ptlkw")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="CharacterBody3D"]
+
+[node name="mouseControlle" type="Node" parent="CharacterBody3D"]
+script = ExtResource("2_spwlg")
+
+[node name="NavigationRegion3D2" type="NavigationRegion3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.0271, 0.00881338, -0.00901508)
+navigation_mesh = SubResource("NavigationMesh_owhd2")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D2"]
+use_collision = true
+size = Vector3(20, 0.052, 20)
+material = ExtResource("3_x3h3c")
+
+[node name="door" type="StaticBody3D" parent="." groups=["Door"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.98894, 1.19742, 1.83232)
+script = ExtResource("5_x3h3c")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="door"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.109467, 0)
+shape = SubResource("BoxShape3D_x3h3c")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="door"]
+transform = Transform3D(0.461565, 0, 0, 0, 2.24481, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_x3h3c")
+
+[node name="SpawnPoint_2" type="Node3D" parent="door"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.142, 0, 0)
+
+[node name="SpawnPoint_1" type="Node3D" parent="door"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.42142, 0, 0)
+
+[node name="cameraPos_2" type="Node3D" parent="door"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.9231, 7.80808, 9.03891)
+
+[node name="cameraPos_1" type="Node3D" parent="door"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.67301, 5.76755, 7.14037)
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_owhd2")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D"]
+use_collision = true
+size = Vector3(20, 0.052, 20)
+material = ExtResource("3_x3h3c")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.782565, 0.622569, 0, -0.622569, 0.782565, 0, 9.00837, 10.9669)
+
+[node name="inspectPos" type="Node3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.96046e-08, -1.68969)
+
+[node name="inspectable" type="StaticBody3D" parent="." groups=["inspectable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.74601, 0.634422, 0)
+script = ExtResource("4_spwlg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="inspectable"]
+transform = Transform3D(0.308587, 0, 0, 0, 0.308587, 0, 0, 0, 0.308587, 0, 0, 0)
+shape = SubResource("BoxShape3D_o5p50")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="inspectable"]
+transform = Transform3D(0.308587, 0, 0, 0, 0.308587, 0, 0, 0, 0.308587, 0, 0, 0)
+mesh = SubResource("BoxMesh_spwlg")
+
+[node name="collectable" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.76937, 0.614356, -2.92036)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="collectable"]
+shape = SubResource("BoxShape3D_o5p50")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="collectable"]
+mesh = SubResource("BoxMesh_spwlg")
+
+[node name="puzzle" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.488903, 0.558023, -5.50768)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="puzzle"]
+shape = SubResource("BoxShape3D_o5p50")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="puzzle"]
+mesh = SubResource("BoxMesh_spwlg")
+
+[node name="Wall" type="CSGBox3D" parent="." groups=["Wall"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.01, 3.93481, -0.00945687)
+use_collision = true
+size = Vector3(0.195068, 8.86963, 20.0463)
+material = ExtResource("6_10iwk")

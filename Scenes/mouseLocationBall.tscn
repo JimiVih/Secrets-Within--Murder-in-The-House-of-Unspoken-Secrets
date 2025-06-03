@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://iv8q0i21ryi4"]
+
+[ext_resource type="Material" uid="uid://cf753mwk4d6uj" path="res://Materials/mouseLocationBallMAT.tres" id="1_t5f6n"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_qhb3i"]
+
+[node name="mouseBall" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_qhb3i")
+surface_material_override/0 = ExtResource("1_t5f6n")

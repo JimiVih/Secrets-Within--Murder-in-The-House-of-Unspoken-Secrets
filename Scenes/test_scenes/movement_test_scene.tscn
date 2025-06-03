@@ -1,0 +1,73 @@
+[gd_scene load_steps=12 format=3 uid="uid://dp7ygxau7qcpi"]
+
+[ext_resource type="Material" uid="uid://hctxtk72lpok" path="res://Materials/prototypeMaterials/FloorMAT.tres" id="1_k34pu"]
+[ext_resource type="PackedScene" uid="uid://iv8q0i21ryi4" path="res://Scenes/mouseLocationBall.tscn" id="2_wurv3"]
+[ext_resource type="Script" uid="uid://u5pvd0evm40a" path="res://Scripts/mouse_controller.gd" id="3_xmc35"]
+[ext_resource type="Script" uid="uid://b54lkkupgnxdx" path="res://Scripts/charcterMovement.gd" id="4_t4tbo"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wurv3"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_xmc35"]
+sky_material = SubResource("ProceduralSkyMaterial_wurv3")
+
+[sub_resource type="Environment" id="Environment_t4tbo"]
+background_mode = 2
+sky = SubResource("Sky_xmc35")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nm7wr"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_wmp4o"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_t4tbo"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_t4tbo"]
+vertices = PackedVector3Array(-4.5, 0.473, -4.5, -4.5, 0.473, 4.5, 4.5, 0.473, 4.5, 4.5, 0.473, -4.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[node name="MovementTestSCENE" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_t4tbo")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.729995, 0.532438, -0.428505, -2.98023e-08, 0.626971, 0.779043, 0.683452, -0.568697, 0.457686, -3.68049, 5.8908, 3.85523)
+
+[node name="mouseBall" parent="." instance=ExtResource("2_wurv3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.02965, 0, -0.379975)
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." node_paths=PackedStringArray("followBall")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.14707, 0)
+script = ExtResource("4_t4tbo")
+speed = 2.0
+followBall = NodePath("../mouseBall")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+shape = SubResource("CapsuleShape3D_nm7wr")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
+mesh = SubResource("CapsuleMesh_wmp4o")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="CharacterBody3D"]
+
+[node name="mouseController" type="Node" parent="CharacterBody3D"]
+script = ExtResource("3_xmc35")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="CharacterBody3D"]
+transform = Transform3D(0.205368, 0, 0, 0, 0.205368, 0, 0, 0, 0.205368, 0, 0.52197, -0.578627)
+mesh = SubResource("BoxMesh_t4tbo")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_t4tbo")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D"]
+use_collision = true
+size = Vector3(10, 0.054, 10)
+material = ExtResource("1_k34pu")
