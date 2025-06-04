@@ -16,7 +16,7 @@ func _process(delta: float) -> void:
 		animationPlayer.play("walking_player")
 	else:
 		animationPlayer.play("Idle_player")
-	print(velocity)
+	
 
 func _physics_process(delta: float) -> void:
 	look_at(targ)

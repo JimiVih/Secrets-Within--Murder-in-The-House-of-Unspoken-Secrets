@@ -12,9 +12,9 @@ func _openDoor(player: Node3D) -> void:
 	print(distanceToPlayer)
 	print("Door opened")
 	var cam: Node3D = $"../Camera3D"
-	if spawnPoint_1.global_position.distance_to(playerPosition) < 1:
+	if spawnPoint_1.global_position.distance_to(playerPosition) <= 1.5:
 		player.global_position = spawnPoint_2.global_position
 		cam.global_position = nextCameraPos_2.global_position
-	elif spawnPoint_2.global_position.distance_to(playerPosition) < 1:
+	elif spawnPoint_2.global_position.distance_to(playerPosition) <= 1.5:
 		player.global_position = spawnPoint_1.global_position
 		cam.global_position = nextCameraPos_1.global_position

@@ -21,6 +21,7 @@ inspectable="This group has items that can be inspected"
 Player=""
 Door=""
 Wall=""
+Stairs=""
 
 [input]
 

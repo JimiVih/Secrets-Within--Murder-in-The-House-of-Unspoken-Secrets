@@ -17,22 +17,28 @@ func _checkTarget(target: Node3D) -> void:
 	var distanceToTarget = player.position.distance_to(target.position)
 	var curTarget = target
 		#INSPECTABLE
-	if distanceToTarget <= 2 and lastTarget != null:
-		if target.is_in_group("inspectable") and curTarget == lastTarget:
+	if lastTarget != null:
+		if target.is_in_group("inspectable") and curTarget == lastTarget and distanceToTarget <= 1.3:
 			inspecting = true
 			target._inspectItem()
 			canShootRay = false
 			lastTarget = null
-		elif target.is_in_group("Door") and curTarget == lastTarget:
+		elif target.is_in_group("Door") and curTarget == lastTarget and distanceToTarget <= 2:
+			target._openDoor(get_parent())
+			lastTarget = null
+		elif target.is_in_group("Stairs") and curTarget == lastTarget:
 			target._openDoor(get_parent())
 			lastTarget = null
 	else:
 		if distanceToTarget <= 2 and (target.is_in_group("Door") or target.is_in_group("inspectable")):
 			lastTarget = curTarget
+		elif target.is_in_group("Stairs"):
+			lastTarget = curTarget
 		else:
 			lastTarget = null
 	print(distanceToTarget)
 	print(lastTarget)
+	print(curTarget)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
