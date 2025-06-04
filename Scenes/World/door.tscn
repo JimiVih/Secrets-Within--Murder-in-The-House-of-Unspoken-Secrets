@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://dw8htmguhodfl"]
+
+[ext_resource type="Script" uid="uid://cbaejdcc7fll7" path="res://Scripts/interactables/door.gd" id="1_s0flh"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_py0e7"]
+size = Vector3(1.36499, 2.11725, 1.14063)
+
+[sub_resource type="BoxMesh" id="BoxMesh_a1te6"]
+
+[node name="door" type="StaticBody3D" groups=["Door"]]
+script = ExtResource("1_s0flh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.109467, 0)
+shape = SubResource("BoxShape3D_py0e7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.32027, 0, 0, 0, 2.24481, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_a1te6")
+
+[node name="SpawnPoint_2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.142, 0, 0)
+
+[node name="SpawnPoint_1" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.42142, 0, 0)
+
+[node name="Node3D" type="Node3D" parent="."]

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="The Unsolvable secrets"
-run/main_scene="uid://n30g1mb1h0fm"
+run/main_scene="uid://c4igue4n5iyar"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 

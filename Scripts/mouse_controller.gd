@@ -1,6 +1,7 @@
 extends Node
 
 @onready var cam: Camera3D = $"../../Camera3D"
+@onready var animationPlayer: AnimationPlayer = $"../AnimationPlayer"
 var inspectPos: Node3D
 @onready var player: Node3D = $".."
 var canShootRay: bool = true

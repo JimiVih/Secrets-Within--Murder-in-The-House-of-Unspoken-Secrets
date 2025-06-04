@@ -1,0 +1,98 @@
+[gd_scene load_steps=8 format=3 uid="uid://c4igue4n5iyar"]
+
+[ext_resource type="PackedScene" uid="uid://b4tu5vd65npki" path="res://models/building_1.blend" id="1_fjo0m"]
+[ext_resource type="PackedScene" uid="uid://d3mjlgyfs1sei" path="res://Scenes/Characters/player_godot.tscn" id="1_ve0n7"]
+[ext_resource type="Script" uid="uid://cbaejdcc7fll7" path="res://Scripts/interactables/door.gd" id="3_uv13l"]
+
+[sub_resource type="Environment" id="Environment_s73oe"]
+background_mode = 1
+background_color = Color(0.0687983, 0.0687983, 0.0687983, 1)
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_fjo0m"]
+vertices = PackedVector3Array(-1.97635, 0.256574, -19.5493, -1.97635, 0.256574, -10.5493, 5.77365, 0.256574, -10.5493, 5.77365, 0.256574, -19.5493, 13.2736, 0.256574, -19.5493, 13.2736, 0.256574, -10.5493, 17.2736, 0.256574, -10.5493, 17.2736, 0.256574, -19.5493, 7.27365, 0.256574, -19.0493, 7.27365, 0.256574, -10.7993, 11.5236, 0.256574, -10.7993, 11.5236, 0.256574, -19.0493, -1.22635, 0.256574, -8.79932, -1.22635, 0.256574, 11.2007, 17.0236, 0.256574, 11.2007, 17.0236, 0.256574, -8.79932, -1.97635, 0.256574, 12.7007, -1.97635, 0.256574, 21.9507, 5.77365, 0.256574, 21.9507, 5.77365, 0.256574, 12.7007, 13.2736, 0.256574, 12.7007, 13.2736, 0.256574, 21.9507, 17.2736, 0.256574, 21.9507, 17.2736, 0.256574, 12.7007, 7.27365, 0.256574, 13.2007, 7.27365, 0.256574, 21.2007, 11.5236, 0.256574, 21.2007, 11.5236, 0.256574, 13.2007)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1), PackedInt32Array(7, 6, 4), PackedInt32Array(4, 6, 5), PackedInt32Array(11, 10, 8), PackedInt32Array(8, 10, 9), PackedInt32Array(15, 14, 12), PackedInt32Array(12, 14, 13), PackedInt32Array(19, 18, 16), PackedInt32Array(16, 18, 17), PackedInt32Array(23, 22, 20), PackedInt32Array(20, 22, 21), PackedInt32Array(27, 26, 24), PackedInt32Array(24, 26, 25)]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_s73oe"]
+size = Vector3(1.40405, 2.11725, 1.14063)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ncnfd"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_s73oe")
+
+[node name="Player" parent="." instance=ExtResource("1_ve0n7")]
+transform = Transform3D(0.28, 0, 0, 0, 0.28, 0, 0, 0, 0.28, 8.2819, 0.906189, 6.51187)
+speed = 2.0
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-4.37114e-08, -0.866025, 0.5, 0, 0.5, 0.866025, -1, 3.78552e-08, -2.18557e-08, 11.742, 10.9239, 1.0793)
+
+[node name="inspectPos" type="Node3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.96046e-08, -1.68969)
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_fjo0m")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.77268, 0, 1.17389)
+use_collision = true
+size = Vector3(20, 0.001, 42.4464)
+
+[node name="building_1" parent="NavigationRegion3D" instance=ExtResource("1_fjo0m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.832351, 0.122463, -0.185449)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="NavigationRegion3D/building_1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.88623, 3.27076, 0)
+omni_range = 10.9021
+
+[node name="door_kid_entr" type="StaticBody3D" parent="." groups=["Door"]]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 9.17755, 1.29859, -9.89889)
+script = ExtResource("3_uv13l")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="door_kid_entr"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.109467, 0)
+shape = SubResource("BoxShape3D_s73oe")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="door_kid_entr"]
+transform = Transform3D(1.40511, 0, 0, 0, 2.24481, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_ncnfd")
+
+[node name="SpawnPoint_2" type="Node3D" parent="door_kid_entr"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.142, 0, 0)
+
+[node name="SpawnPoint_1" type="Node3D" parent="door_kid_entr"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.42142, 0, 0)
+
+[node name="cameraPos_2" type="Node3D" parent="door_kid_entr"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.03335, 9.36677, 3.20669)
+
+[node name="cameraPos_1" type="Node3D" parent="door_kid_entr"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.0478, 9.23871, 2.46588)
+
+[node name="door_wash_entr" type="StaticBody3D" parent="." groups=["Door"]]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 9.7902, 1.19742, 12.1538)
+script = ExtResource("3_uv13l")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="door_wash_entr"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.109467, 0)
+shape = SubResource("BoxShape3D_s73oe")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="door_wash_entr"]
+transform = Transform3D(1.40511, 0, 0, 0, 2.24481, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_ncnfd")
+
+[node name="SpawnPoint_2" type="Node3D" parent="door_wash_entr"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.142, 0, 0)
+
+[node name="SpawnPoint_1" type="Node3D" parent="door_wash_entr"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.42142, 0, 0)
+
+[node name="cameraPos_2" type="Node3D" parent="door_wash_entr"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.9231, 9.36677, 3.20669)
+
+[node name="cameraPos_1" type="Node3D" parent="door_wash_entr"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.80835, 7.88933, 3.77786)

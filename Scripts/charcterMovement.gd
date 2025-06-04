@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 @onready var agent: NavigationAgent3D = $NavigationAgent3D
 @export var speed: float
+@onready var animationPlayer: AnimationPlayer = $AnimationPlayer
 var targ: Vector3
 var isDoor: bool = false
 
@@ -9,6 +10,13 @@ func _moveTo(targetPosition, _isDoor: bool) -> void:
 	agent.target_position = targetPosition
 	targ = targetPosition
 	isDoor = _isDoor
+	
+func _process(delta: float) -> void:
+	if velocity.z >= 0.2 or velocity.z <= -0.2 or velocity.x >= 0.2 or velocity.x <= -0.2:
+		animationPlayer.play("walking_player")
+	else:
+		animationPlayer.play("Idle_player")
+	print(velocity)
 
 func _physics_process(delta: float) -> void:
 	look_at(targ)
