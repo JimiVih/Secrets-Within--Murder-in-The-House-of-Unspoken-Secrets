@@ -4,6 +4,7 @@ var isDuplicate: bool = false
 var mouseEntered: bool = false
 var mouseDown: bool = false
 var itemDuplicate: Node3D
+var inspectableName: String
 
 func _destroyObject() -> void:
 	queue_free()

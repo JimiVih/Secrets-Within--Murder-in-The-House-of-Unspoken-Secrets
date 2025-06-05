@@ -1,7 +1,9 @@
 extends Node
 
+@onready var gameManager: Node = $"../../GameManager"
 @onready var cam: Camera3D = $"../../Camera3D"
 @onready var animationPlayer: AnimationPlayer = $"../AnimationPlayer"
+@onready var audioStream2D: AudioStreamPlayer2D = $"../AudioStreamPlayer2D"
 var inspectPos: Node3D
 @onready var player: Node3D = $".."
 var canShootRay: bool = true
@@ -19,6 +21,38 @@ func _checkTarget(target: Node3D) -> void:
 		#INSPECTABLE
 	if lastTarget != null:
 		if (target.is_in_group("inspectable") or target.is_in_group("Puzzle")) and curTarget == lastTarget:
+			if target.is_in_group("Trophy"):
+				if gameManager.hasKey:
+					gameManager.hasTrophy = true
+					inspecting = true
+					target._inspectItem(cam)
+					canShootRay = false
+					lastTarget = null
+					audioStream2D.stream = load("res://Audios/Dialog/Trophy.mp3")
+					audioStream2D.play()
+					print("Yes Key!")
+					return
+				else:
+					print("No Key")
+					return
+			if target.is_in_group("Ring"):
+				gameManager.hasRing = true
+				if gameManager.hasTrophy:
+					inspecting = true
+					target._inspectItem(cam)
+					canShootRay = false
+					lastTarget = null
+					audioStream2D.stream = load("res://Audios/Dialog/foundRingandtrophy.mp3")
+					audioStream2D.play()
+					return
+				else:
+					inspecting = true
+					target._inspectItem(cam)
+					canShootRay = false
+					lastTarget = null
+					audioStream2D.stream = load("res://Audios/Dialog/foundRingNoTrophy.mp3")
+					audioStream2D.play()
+					return
 			inspecting = true
 			target._inspectItem(cam)
 			canShootRay = false
@@ -38,8 +72,13 @@ func _checkTarget(target: Node3D) -> void:
 	else:
 		if (target.is_in_group("Door") or target.is_in_group("inspectable") or target.is_in_group("Puzzle")):
 			lastTarget = curTarget
+			if target.is_in_group("Door"):
+				audioStream2D.stream = load("res://Audios/Dialog/clickingDoor.wav")
+				audioStream2D.play()
 		elif target.is_in_group("Stairs"):
 			lastTarget = curTarget
+			audioStream2D.stream = load("res://Audios/Dialog/WalkingStairs_sfx_2.wav")
+			audioStream2D.play()
 		elif target.is_in_group("Npc") and distanceToTarget <= 2:
 			lastTarget = curTarget
 		else:

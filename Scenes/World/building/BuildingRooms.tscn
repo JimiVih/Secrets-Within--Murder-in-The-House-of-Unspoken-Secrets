@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://c4igue4n5iyar"]
+[gd_scene load_steps=35 format=3 uid="uid://c4igue4n5iyar"]
 
 [ext_resource type="PackedScene" uid="uid://b4tu5vd65npki" path="res://models/building_1.blend" id="1_fjo0m"]
 [ext_resource type="PackedScene" uid="uid://d3mjlgyfs1sei" path="res://Scenes/Characters/player_godot.tscn" id="1_ve0n7"]
@@ -15,6 +15,8 @@
 [ext_resource type="PackedScene" uid="uid://blo7awely7hpb" path="res://models/cardBoards/KidCardboard.blend" id="12_jbi2d"]
 [ext_resource type="PackedScene" uid="uid://hws1u74dwgjp" path="res://models/cardBoards/ButtlerCardboard.blend" id="13_7l6vt"]
 [ext_resource type="Script" uid="uid://cx26fc6fpqlo" path="res://Scripts/GameManager.gd" id="15_aj80j"]
+[ext_resource type="PackedScene" uid="uid://dutj2nyou6vcy" path="res://models/Trophy.blend" id="16_0ihf6"]
+[ext_resource type="PackedScene" uid="uid://r68n84sykwbq" path="res://models/suihkepullo_and_ring.blend" id="17_nmfg5"]
 
 [sub_resource type="Environment" id="Environment_s73oe"]
 background_mode = 1
@@ -57,6 +59,14 @@ size = Vector3(1, 2.21118, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_0ihf6"]
 size = Vector3(0.830078, 1.27905, 0.901947)
 
+[sub_resource type="BoxMesh" id="BoxMesh_nmfg5"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bm6kn"]
+size = Vector3(1, 2.48343, 2.04102)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nmfg5"]
+size = Vector3(0.533203, 0.90918, 0.643555)
+
 [node name="Node3D" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -65,9 +75,6 @@ environment = SubResource("Environment_s73oe")
 [node name="Player" parent="." instance=ExtResource("1_ve0n7")]
 transform = Transform3D(0.28, 0, 0, 0, 0.28, 0, 0, 0, 0.28, 8.2819, 0.906189, 6.51187)
 speed = 3.0
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Player"]
-unit_size = 7.0
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-4.37114e-08, -0.866025, 0.5, 0, 0.5, 0.866025, -1, 3.78552e-08, -2.18557e-08, 11.742, 10.9239, 1.0793)
@@ -516,3 +523,32 @@ transform = Transform3D(-4.37114e-08, -0.802755, 0.596309, 1, -3.50895e-08, 2.60
 
 [node name="GameManager" type="Node" parent="."]
 script = ExtResource("15_aj80j")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="GameManager"]
+
+[node name="showcase" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 2.41149, 0, 0, 0, 2.07308, 4.60827, 1.23922, 6.79021)
+mesh = SubResource("BoxMesh_nmfg5")
+skeleton = NodePath("../TrophyStatic/Trophy")
+
+[node name="TrophyStatic" type="StaticBody3D" parent="." groups=["Trophy", "inspectable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.58744, 1.27449, 6.78838)
+script = ExtResource("7_e4pmr")
+
+[node name="Trophy" parent="TrophyStatic" instance=ExtResource("16_0ihf6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.716804, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrophyStatic"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0404205, 0)
+shape = SubResource("BoxShape3D_bm6kn")
+
+[node name="Ring and suihkepullo" type="StaticBody3D" parent="." groups=["Ring", "inspectable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.41775, 0.420485, 18.1756)
+script = ExtResource("7_e4pmr")
+
+[node name="suihkepullo_and_ring" parent="Ring and suihkepullo" instance=ExtResource("17_nmfg5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.460559, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ring and suihkepullo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0454102, 0)
+shape = SubResource("BoxShape3D_nmfg5")

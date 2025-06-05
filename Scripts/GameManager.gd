@@ -8,7 +8,9 @@ var progress: int = 0
 var hasKey: bool = false
 var hasTrophy: bool = false
 var hasRing: bool = false
-var hasMonocle: bool = true
+var hasMonocle: bool = false
+var finale: bool = false
+
 
 func _getDialog(whoIs: String):
 	if whoIs == "Wife":
@@ -19,12 +21,13 @@ func _getDialog(whoIs: String):
 		if hasRing and !hasTrophy:
 			return load("res://Audios/Dialog/giveRing.mp3")
 		if hasRing and hasTrophy:
+			finale = true
 			return load("res://Audios/Dialog/caughtYellowhanded.mp3")
 	if whoIs == "Husband":
 		if hasMonocle:
 			husbandProgress = 1
 		if husbandProgress < 1:
-			return load("res://Audios/Dialog/HusbandProgress0.mp3")
+			return load("res://Audios/Dialog/ILoveTrophies.mp3")
 		if hasMonocle:
 			return load("res://Audios/Dialog/fiveMonocle.mp3")
 	if whoIs == "Kid":

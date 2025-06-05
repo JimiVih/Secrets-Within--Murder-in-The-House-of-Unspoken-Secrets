@@ -6,6 +6,7 @@ var mouseIn: bool = false
 func _buttonPressed() -> void:
 	var numpad_ = get_parent()
 	numpad_._addDigit(numpad_number)
+	
 
 func _input(event: InputEvent) -> void:
 	if mouseIn:

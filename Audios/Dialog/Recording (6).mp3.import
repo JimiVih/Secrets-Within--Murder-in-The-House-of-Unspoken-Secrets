@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dfgwqf0p08bx"
+path="res://.godot/imported/Recording (6).mp3-3a9b6971e96f23a39567af9eb437c565.mp3str"
+
+[deps]
+
+source_file="res://Audios/Dialog/Recording (6).mp3"
+dest_files=["res://.godot/imported/Recording (6).mp3-3a9b6971e96f23a39567af9eb437c565.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

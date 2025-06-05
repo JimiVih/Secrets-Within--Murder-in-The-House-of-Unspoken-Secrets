@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=4 uid="uid://d3mjlgyfs1sei"]
+[gd_scene load_steps=16 format=4 uid="uid://d3mjlgyfs1sei"]
 
 [ext_resource type="Script" uid="uid://b54lkkupgnxdx" path="res://Scripts/charcterMovement.gd" id="1_82pbo"]
 [ext_resource type="Script" uid="uid://u5pvd0evm40a" path="res://Scripts/mouse_controller.gd" id="2_g2kex"]
+[ext_resource type="AudioStream" uid="uid://cij4eqklkjre2" path="res://Audios/Dialog/Walking_sfx.wav" id="2_q6qkl"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4gluc"]
 resource_name = "Jacket"
@@ -328,6 +329,17 @@ tracks/17/path = NodePath("Armature/Skeleton3D:footTip.R")
 tracks/17/interp = 0
 tracks/17/loop_wrap = true
 tracks/17/keys = PackedFloat32Array(0, 1, 0.0831721, -0.984759, -0.000220227, 0.15275)
+tracks/18/type = "audio"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("AudioStreamPlayer3D")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"clips": [],
+"times": PackedFloat32Array()
+}
+tracks/18/use_blend = true
 
 [sub_resource type="Animation" id="Animation_tflog"]
 resource_name = "walking_player"
@@ -474,6 +486,13 @@ height = 7.63731
 transform = Transform3D(0.28, 0, 0, 0, 0.28, 0, 0, 0, 0.28, 0, 0, 0)
 collision_layer = 0
 script = ExtResource("1_82pbo")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(3.57143, 0, 0, 0, 3.57143, 0, 0, 0, 3.57143, 0, 0, 0)
+stream = ExtResource("2_q6qkl")
+unit_size = 4.8
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 
 [node name="Armature" type="Node3D" parent="."]
 transform = Transform3D(-3.50625e-08, 0, 0.802136, 0, 0.802136, 0, -0.802136, 0, -3.50625e-08, 0, 0, 0)
