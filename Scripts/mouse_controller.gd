@@ -30,10 +30,17 @@ func _checkTarget(target: Node3D) -> void:
 		elif target.is_in_group("Stairs") and curTarget == lastTarget:
 			target._openDoor(get_parent())
 			lastTarget = null
+		elif target.is_in_group("Npc") and curTarget == lastTarget:
+			target._speak()
+			lastTarget = null
+		else:
+			lastTarget = null
 	else:
 		if (target.is_in_group("Door") or target.is_in_group("inspectable") or target.is_in_group("Puzzle")):
 			lastTarget = curTarget
 		elif target.is_in_group("Stairs"):
+			lastTarget = curTarget
+		elif target.is_in_group("Npc") and distanceToTarget <= 2:
 			lastTarget = curTarget
 		else:
 			lastTarget = null

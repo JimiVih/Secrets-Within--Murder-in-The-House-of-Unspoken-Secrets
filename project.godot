@@ -23,6 +23,7 @@ Door=""
 Wall=""
 Stairs=""
 Puzzle=""
+Npc=""
 
 [input]
 

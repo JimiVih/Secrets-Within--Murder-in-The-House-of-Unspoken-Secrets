@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://c4igue4n5iyar"]
+[gd_scene load_steps=30 format=3 uid="uid://c4igue4n5iyar"]
 
 [ext_resource type="PackedScene" uid="uid://b4tu5vd65npki" path="res://models/building_1.blend" id="1_fjo0m"]
 [ext_resource type="PackedScene" uid="uid://d3mjlgyfs1sei" path="res://Scenes/Characters/player_godot.tscn" id="1_ve0n7"]
@@ -10,9 +10,11 @@
 [ext_resource type="PackedScene" uid="uid://cnc511l0yvhwl" path="res://models/chessBoard.blend" id="7_8mhcu"]
 [ext_resource type="Script" uid="uid://cobsdeg3tmgw1" path="res://Scripts/interactables/inspectable.gd" id="7_e4pmr"]
 [ext_resource type="PackedScene" uid="uid://bt5qmu2jj33xn" path="res://models/cardBoards/WifeCardboard.blend" id="10_8u1bw"]
+[ext_resource type="Script" uid="uid://20v63jmsf8xl" path="res://Scripts/interactables/DialogScript.gd" id="10_ahp1o"]
 [ext_resource type="PackedScene" uid="uid://n16x5sbveyw5" path="res://models/cardBoards/HusbandCardboard.blend" id="11_qkvuv"]
 [ext_resource type="PackedScene" uid="uid://blo7awely7hpb" path="res://models/cardBoards/KidCardboard.blend" id="12_jbi2d"]
 [ext_resource type="PackedScene" uid="uid://hws1u74dwgjp" path="res://models/cardBoards/ButtlerCardboard.blend" id="13_7l6vt"]
+[ext_resource type="Script" uid="uid://cx26fc6fpqlo" path="res://Scripts/GameManager.gd" id="15_aj80j"]
 
 [sub_resource type="Environment" id="Environment_s73oe"]
 background_mode = 1
@@ -46,6 +48,15 @@ size = Vector3(1.40405, 2.11725, 1.14063)
 [sub_resource type="BoxShape3D" id="BoxShape3D_uv13l"]
 size = Vector3(1.33099, 8.93036, 6.18854)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_7l6vt"]
+size = Vector3(1, 2.4101, 1.20703)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_aj80j"]
+size = Vector3(1, 2.21118, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0ihf6"]
+size = Vector3(0.830078, 1.27905, 0.901947)
+
 [node name="Node3D" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -54,6 +65,9 @@ environment = SubResource("Environment_s73oe")
 [node name="Player" parent="." instance=ExtResource("1_ve0n7")]
 transform = Transform3D(0.28, 0, 0, 0, 0.28, 0, 0, 0, 0.28, 8.2819, 0.906189, 6.51187)
 speed = 3.0
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Player"]
+unit_size = 7.0
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-4.37114e-08, -0.866025, 0.5, 0, 0.5, 0.866025, -1, 3.78552e-08, -2.18557e-08, 11.742, 10.9239, 1.0793)
@@ -454,14 +468,51 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.71826, 9.36677, 3.20759)
 [node name="cameraPos_1" type="Node3D" parent="diningRoom"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.0108, 9.78747, 3.26048)
 
-[node name="WifeCardboard2" parent="." instance=ExtResource("10_8u1bw")]
+[node name="WifeStatic" type="StaticBody3D" parent="." groups=["Npc"]]
 transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 6.28905, 1.56405, -4.88415)
+script = ExtResource("10_ahp1o")
+characterName = "Wife"
 
-[node name="HusbandCardboard" parent="." instance=ExtResource("11_qkvuv")]
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="WifeStatic"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+unit_size = 7.0
+
+[node name="WifeCardboard2" parent="WifeStatic" instance=ExtResource("10_8u1bw")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WifeStatic"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.225677, -0.103515)
+shape = SubResource("BoxShape3D_7l6vt")
+
+[node name="HusbandStatic" type="StaticBody3D" parent="." groups=["Npc"]]
 transform = Transform3D(0.750976, 0, 0.660329, 0, 1, 0, -0.660329, 0, 0.750976, 7.16255, 1.36254, 8.73508)
+script = ExtResource("10_ahp1o")
+characterName = "Husband"
 
-[node name="KidCardboard" parent="." instance=ExtResource("12_jbi2d")]
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="HusbandStatic"]
+unit_size = 7.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HusbandStatic"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0921631, 0)
+shape = SubResource("BoxShape3D_aj80j")
+
+[node name="HusbandCardboard" parent="HusbandStatic" instance=ExtResource("11_qkvuv")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." groups=["Npc"]]
 transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, 7.71687, 1.36476, -16.255)
+script = ExtResource("10_ahp1o")
+characterName = "Kid"
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="StaticBody3D"]
+unit_size = 7.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0849619, -0.685181, -0.090107)
+shape = SubResource("BoxShape3D_0ihf6")
+
+[node name="KidCardboard" parent="StaticBody3D" instance=ExtResource("12_jbi2d")]
 
 [node name="ButtlerCardboard" parent="." instance=ExtResource("13_7l6vt")]
 transform = Transform3D(-4.37114e-08, -0.802755, 0.596309, 1, -3.50895e-08, 2.60655e-08, 0, 0.596309, 0.802755, 10.9427, 0.0379691, -3.00685)
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("15_aj80j")
