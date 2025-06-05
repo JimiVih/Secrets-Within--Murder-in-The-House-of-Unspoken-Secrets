@@ -22,6 +22,7 @@ Player=""
 Door=""
 Wall=""
 Stairs=""
+Puzzle=""
 
 [input]
 

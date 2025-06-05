@@ -472,6 +472,7 @@ height = 7.63731
 
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(0.28, 0, 0, 0, 0.28, 0, 0, 0, 0.28, 0, 0, 0)
+collision_layer = 0
 script = ExtResource("1_82pbo")
 
 [node name="Armature" type="Node3D" parent="."]
