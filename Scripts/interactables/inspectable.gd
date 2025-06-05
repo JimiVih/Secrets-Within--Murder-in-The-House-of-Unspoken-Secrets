@@ -30,8 +30,7 @@ func _input(event: InputEvent) -> void:
 			rotate_object_local(Vector3.UP, event.relative.x  * 0.005)
 			rotate_object_local(Vector3.LEFT, event.relative.y  * 0.005)
 	
-func _inspectItem() -> void:
-	var cam: Node3D = $"../Camera3D"
+func _inspectItem(cam: Node3D) -> void:
 	#var item = load(instantiatePath)
 	itemDuplicate = duplicate()
 	cam.get_child(0).add_child(itemDuplicate)

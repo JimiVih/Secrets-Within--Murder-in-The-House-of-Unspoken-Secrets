@@ -41,8 +41,7 @@ func _disableCollision() -> void:
 	else:
 		pass
 
-func _inspectItem() -> void:
-	var cam: Node3D = $"../../../Camera3D"
+func _inspectItem(cam: Node3D) -> void:
 	#var item = load(instantiatePath)
 	itemDuplicate = duplicate()
 	cam.get_child(0).add_child(itemDuplicate)

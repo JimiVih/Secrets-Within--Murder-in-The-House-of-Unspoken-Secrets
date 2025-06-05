@@ -18,9 +18,9 @@ func _checkTarget(target: Node3D) -> void:
 	var curTarget = target
 		#INSPECTABLE
 	if lastTarget != null:
-		if (target.is_in_group("inspectable") or target.is_in_group("Puzzle")) and curTarget == lastTarget and distanceToTarget <= 2:
+		if (target.is_in_group("inspectable") or target.is_in_group("Puzzle")) and curTarget == lastTarget:
 			inspecting = true
-			target._inspectItem()
+			target._inspectItem(cam)
 			canShootRay = false
 			lastTarget = null
 			print("Hello :DDDD")
@@ -31,7 +31,7 @@ func _checkTarget(target: Node3D) -> void:
 			target._openDoor(get_parent())
 			lastTarget = null
 	else:
-		if distanceToTarget <= 2 and (target.is_in_group("Door") or target.is_in_group("inspectable") or target.is_in_group("Puzzle")):
+		if (target.is_in_group("Door") or target.is_in_group("inspectable") or target.is_in_group("Puzzle")):
 			lastTarget = curTarget
 		elif target.is_in_group("Stairs"):
 			lastTarget = curTarget
