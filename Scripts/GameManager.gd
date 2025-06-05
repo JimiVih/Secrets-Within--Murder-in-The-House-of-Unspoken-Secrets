@@ -1,5 +1,6 @@
 extends Node
 
+@onready var theEnd: RichTextLabel = $CanvasLayer/RichTextLabel
 var dialogPlayer: AudioStreamPlayer
 var kidProgress: int = 0
 var wifeProgress: int = 0
@@ -11,6 +12,8 @@ var hasRing: bool = false
 var hasMonocle: bool = false
 var finale: bool = false
 
+func _theEnd():
+	theEnd.visible = true
 
 func _getDialog(whoIs: String):
 	if whoIs == "Wife":

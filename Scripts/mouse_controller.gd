@@ -10,6 +10,7 @@ var canShootRay: bool = true
 var inspecting: bool = false
 var inspectPos_z_Origin: float
 var lastTarget
+var curTarget
 
 func _ready() -> void:
 	inspectPos = cam.get_child(0)
@@ -17,7 +18,7 @@ func _ready() -> void:
 
 func _checkTarget(target: Node3D) -> void:
 	var distanceToTarget = player.position.distance_to(target.position)
-	var curTarget = target
+	curTarget = target
 		#INSPECTABLE
 	if lastTarget != null:
 		if (target.is_in_group("inspectable") or target.is_in_group("Puzzle")) and curTarget == lastTarget:
@@ -94,6 +95,9 @@ func _input(event: InputEvent) -> void:
 			if canShootRay:
 				_shootRay()
 		if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+			if gameManager.hasKey and curTarget.name == "numbPad":
+				audioStream2D.stream = load("res://Audios/Dialog/Getkey.mp3")
+				audioStream2D.play()
 			if !canShootRay:
 				canShootRay = true
 				if inspecting:

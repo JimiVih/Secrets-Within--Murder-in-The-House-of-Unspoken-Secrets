@@ -9,6 +9,7 @@ func _ready() -> void:
 
 func _endGame():
 	if GameManager.finale:
+		GameManager._theEnd()
 		print("The end")
 	else:
 		print("Not yet")
